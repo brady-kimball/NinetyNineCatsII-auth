@@ -3,10 +3,16 @@ class CatRentalRequest < ActiveRecord::Base
 
   belongs_to :cat
 
+  belongs_to :user,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :User
+
   after_initialize :assign_pending_status
 
   validates(
     :cat_id,
+    :user_id,
     :end_date,
     :start_date,
     :status,

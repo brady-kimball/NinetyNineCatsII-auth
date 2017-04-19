@@ -6,6 +6,16 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  has_many :cat_rental_requests,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :user
+
+  has_many :cats,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :Cat
+
   attr_reader :password
 
   def self.find_by_credentials(user_name, password)

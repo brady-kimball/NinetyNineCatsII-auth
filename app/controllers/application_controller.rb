@@ -5,7 +5,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    @current_user ||= Session.find_by(session_token: session[:session_token]).user
+    current_session = Session.find_by(session_token: session[:session_token])
+    if current_session
+      @current_user ||= Session.find_by(session_token: session[:session_token]).user
+    else
+      @current_user = nil
+    end
   end
 
   def login(user)

@@ -16,6 +16,11 @@ class User < ActiveRecord::Base
     foreign_key: :user_id,
     class_name: :Cat
 
+  has_many :sessions,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :Session
+
   attr_reader :password
 
   def self.find_by_credentials(user_name, password)
@@ -46,6 +51,17 @@ class User < ActiveRecord::Base
 
   def is_password?(password)
     BCrypt::Password.new(self.password_digest).is_password?(password)
+  end
+
+  # For multiple logins
+  # Chck if sesion[session_token] exists in user
+    # If do nothing
+  # Add new session token to sessions (allow log and signup)
+  # Destroy
+    # Destroy the sesion token passed
+
+  def ensure_session_token2
+
   end
 
 end

@@ -13,9 +13,22 @@
     <%= button_to 'Logout', '/session', method: :delete %>
   <% else %>
     <%= button_to 'Log in', new_session_url, method: :get %>
+    <%= button_to 'Sign up', new_user_url, method: :get %>
   <% end %>
+
+  <%= button_to 'All Cats', cats_url, method: :get %>
+  <%= button_to 'Request Rental', new_cat_rental_request_url, method: :get %>
 
 <%= yield %>
 
 </body>
+<footer>
+  <% if current_user %>
+    <p>Currently logged in on <%= current_user.show_logins.count %> devices</p>
+    <% current_user.show_logins.each_with_index do |login, i| %>
+      <% user_agent = UserAgent.parse(login) %>
+      <p> Device <%= i+1 %>: <%= user_agent.browser %> </p>
+    <% end %>
+  <% end %>
+</footer>
 </html>
